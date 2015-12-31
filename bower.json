@@ -1,0 +1,12 @@
+{
+  "name": "logic",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "angular#1.5.0-rc.0",
+    "angular-ui-router": "~0.2.15",
+    "jQuery": "2.1.x",
+    "lodash": "~3.10.1",
+    "bootstrap": "~3.3.6",
+    "blockly": "*"
+  }
+}
