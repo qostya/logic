@@ -24,9 +24,8 @@ angular.module('App').config([
             .state('index.main', {
                 url: '/index',
                 views: {
-                    singleBook: {
-                        templateUrl: CONSTS.pathToModules + '',
-                        controller: 'singleBookCtrl'
+                    leftPanel: {
+                        templateUrl: CONSTS.pathToModules + 'leftPanel/views/left_panel.html'
                     }
                 }
             });

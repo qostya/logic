@@ -6,7 +6,6 @@
     "angular-ui-router": "~0.2.15",
     "jQuery": "2.1.x",
     "lodash": "~3.10.1",
-    "bootstrap": "~3.3.6",
-    "blockly": "*"
+    "bootstrap": "~3.3.6"
   }
 }
