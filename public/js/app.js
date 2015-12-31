@@ -31,6 +31,6 @@ angular.module('App').config(['$stateProvider', '$urlRouterProvider', 'CONSTS', 
 
 angular.module('App').constant('CONSTS', (function () {
     return {
-        pathToModules: './modules/'
+        pathToModules: './js/modules/'
     };
 })());

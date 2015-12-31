@@ -7,7 +7,12 @@ let gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     stylish = require('jshint-stylish'),
     webserver = require('gulp-webserver'),
-    sequence = require('run-sequence');
+    sequence = require('run-sequence'),
+    sass = require('gulp-sass');
+
+let pathToSrc = './public/',
+    pathToSrcJs = pathToSrc + 'js/',
+    pathOfBuild = './build/';
 
 function toJsModule (content) {
     return content.replace('\'use strict\';', '');
@@ -38,9 +43,9 @@ function concatContentAndCustomData(data) {
 
 gulp.task('concatModules', () => {
     return gulp.src([
-        './public/js/routes/*.js',
-        './public/js/modules/**/*.js',
-        './public/js/constants.js'
+        pathToSrcJs + 'routes/*.js',
+        pathToSrcJs + 'modules/**/*.js',
+        pathToSrcJs + 'constants.js'
     ])
     .pipe(jshint({lookup: true}))
     .pipe(jshint.reporter(stylish))
@@ -51,11 +56,23 @@ gulp.task('concatModules', () => {
     .pipe(gulpBabel({
         presets: ['es2015']
     }))
-    .pipe(gulp.dest('./public/js/'));
+    .pipe(gulp.dest( pathToSrcJs ));
+});
+
+gulp.task('compileSass', () => {
+    return gulp.src([
+        pathToSrc + 'sass/*.scss'
+    ])
+        .pipe(concat('style.scss'))
+        .pipe(sass({
+            //outputStyle: 'compressed'
+        }).on('error', sass.logError))
+        .pipe(gulp.dest(pathToSrc + 'css/'))
+        .pipe(gulp.dest(pathOfBuild + 'css/'));
 });
 
 gulp.task('createServer', () => {
-    return gulp.src('public/js')
+    return gulp.src('public')
         .pipe(webserver(
             {
                 livereload: true,
@@ -66,11 +83,11 @@ gulp.task('createServer', () => {
 
 gulp.task('concatVendor', () => {
     return gulp.src([
-        './public/js/vendor/angular/angular.js',
-        './public/js/vendor/angular-ui-router/release/angular-ui-router.js'
+        pathToSrcJs + 'vendor/angular/angular.js',
+        pathToSrcJs + 'vendor/angular-ui-router/release/angular-ui-router.js'
     ])
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('./build/js/')
+        .pipe(gulp.dest(pathOfBuild + 'js/')
     );
 });
 
@@ -78,6 +95,7 @@ gulp.task('default', () => {
     sequence(
         'concatModules',
         'createServer',
+        'compileSass',
         (error) => {
             if (error) {
                 console.log(error.message);

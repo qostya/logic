@@ -2,7 +2,7 @@
 angular.module('App').constant('CONSTS',
     (() => {
         return  {
-            pathToModules: './modules/'
+            pathToModules: './js/modules/'
         };
     })()
 );
